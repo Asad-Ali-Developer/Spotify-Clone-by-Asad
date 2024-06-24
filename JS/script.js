@@ -13,7 +13,7 @@ async function getSongs(folder){
 
     // let raw = await fetch(`http://127.0.0.1:3000/${folder}/`); --- It can we be ...
 
-    let raw = await fetch(`http://127.0.0.1:5500/${folder}/`);
+    let raw = await fetch(`https://asad-ali-developer.github.io/Spotify-Clone-by-Asad/${folder}/`);
     let response = await raw.text();
     // console.log(response);
 
