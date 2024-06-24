@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify - Web Player</title>
+    <link rel="stylesheet" href="Styling/style.css">
+    <link rel="icon" href="images/pngwing.com.png">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body>
+
+    <div class="container flex margin bg-black">
+        
+        <!-- Left div -->
+        <div class="left">
+            <img class="invert cancel" src="images/cancel.svg" alt="">
+            <div class="home rounded bg-grey">
+
+                <div class="logo invert"><img src="images/logo.svg" alt="logo"></div>
+                <ul>
+                    <li><img class="invert" src="images/home.svg" alt="home">Home</li>
+                    <li id="search"><img class="invert" src="images/search.svg" alt="search">Search</li>
+                </ul>
+            </div>
+
+            <div class="library bg-grey rounded">
+                <div class="logo-add flex justify-between align-center item-center">
+                    <div class="library-logo flex align-center">
+                        <div class="lib">
+                            <img src="images/library.svg" alt="">
+                        </div>
+                        <h3>Your Library</h3>
+                    </div>
+
+                    <div class="add invert"><img src="images/add.svg" alt=""></div>
+                </div>
+
+                <div class="songContainer">
+                    <div class="songList">
+                        <ul>
+                            <!-- <li>
+                                <img class="invert" src="music.svg" alt="">
+                                
+                                <div class="info">
+                                <div class="songName">song name</div>
+                                <div class="singerName">singer name</div>
+                            </div>
+
+                            <div class="playNow">
+                                <span>Play Now</span>
+                                <img class="border invert" src="playbtn.svg" alt="">
+                            </div> 
+                        </li> -->
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+                
+            </div>
+            
+            <div class="left-footer">
+                                <div class="partOne">
+                                    <a href="#">Legal</a>
+                                    <a href="#">Safety &amp; Privacy Center</a>
+                                    <a href="#">Privacy Policy</a>
+                                    <a href="#">Cookies</a>
+                                </div>                                                          
+            </div>
+
+        </div>
+        
+        <!-- Right div -->
+        <div class="right">
+
+            <div class="range">
+                <input type="range" name="vol" id="ranged">
+            </div>
+
+            <div class="header rounded flex align-center justify-between">
+                <div class="nav flex">
+                    <div class="left-nav-main">
+                        <img class="invert hamburger" src="images/hamburger.svg" alt="">
+                        <div class="nav-icon">
+                            <span id="left-nav" class="material-symbols-outlined" href="#"> arrow_back_ios </span>
+                            <span id="right-nav" class="material-symbols-outlined" href="#"> arrow_forward_ios </span>
+                        </div>
+                    </div>
+                
+                </div>
+
+                <div class="btn">
+                    <button class="SignUp">SignUp</button>
+                    <button class="Login">Log in</button>
+                </div>
+            </div>
+
+            
+            <div class="spotify-playlists rounded">
+                <h1>Spotify Playlists</h1>
+
+                <div class="cardsContainer">
+                 
+
+                </div>
+
+                
+            </div>
+            
+            <div class="playBar rounded">
+
+                <div class="aboveBar">
+                    <div class="songInfo"></div>
+
+                    <div class="songButtons">
+                        <img id="previous" src="images/previous.svg" alt="">
+                        <div class="play"><img id="play" src="images/playbtn.svg" alt=""></div>
+                        <img id="next" src="images/next.svg" alt="">
+                    </div>
+
+                    <div class="volume-stats">
+                        <div class="songTime"></div>
+
+                        <div id="volume">
+                            <img class="volume" src="images/volume.svg" alt="">
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="seekBar">
+                    <div class="circle"></div>
+                </div>
+                
+            </div>
+
+        </div>
+
+        </div>
+    
+
+    
+
+
+
+
+
+    <script src="JS/script.js"></script>
+</body>
+</html>
