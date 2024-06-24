@@ -6,75 +6,129 @@ let currentSong = new Audio;
 let songs;
 let currentFolder;
 
-async function getSongs(folder){
+// async function getSongs(folder){
 
  
+//     currentFolder = folder;
+
+//     // let raw = await fetch(`http://127.0.0.1:3000/${folder}/`); --- It can we be ...
+
+//     let raw = await fetch(`https://asad-ali-developer.github.io/Spotify-Clone-by-Asad/${folder}/`);
+//     let response = await raw.text();
+//     // console.log(response);
+
+//     let element = document.createElement("div");
+//     element.innerHTML = response
+
+//     let as = element.getElementsByTagName("a")
+//     // console.log(as);
+
+
+//     songs = [];
+
+//     // We have to run loop to extract all "a's" from response
+
+//     for (let index = 0; index < as.length; index++) {
+//         const element = as[index];
+//         if(element.href.endsWith(".mp3")){
+//             songs.push(element.href.split(`/${folder}/`)[1])
+//         }
+//     }
+    
+//     // console.log(songs);
+
+//     let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0]
+    
+//     var clutter = "";
+    
+//     songs.forEach((elem) => {
+//         clutter += `<li>
+//         <img class="invert" src="images/music.svg" alt="">
+        
+//         <div class="info">
+//             <div class="songName"> ${elem.replaceAll("%20", " ")}
+//             </div>
+//             <div class="singerName">Asad</div>
+//         </div>
+
+//         <div class="playNow">
+//             <span>Play Now</span>
+//             <img class="border invert" src="images/playbtn.svg" alt="">
+//         </div>
+//     </li>`
+//     })
+   
+//     songUL.innerHTML = clutter;
+
+
+//     // var leftSong;
+
+// //    let songIterate = document.querySelector(".songList").getElementsByTagName("li")
+
+//   Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach((elem) => {
+//     elem.addEventListener("click", () => {
+//         // console.log(elem.querySelector(".info").firstElementChild.innerHTML); 
+//         playMusic(elem.querySelector(".info").firstElementChild.innerHTML.trim()); 
+//         // Here, trim() is wrote to remove the extra spaces in url or Address ...
+//     })
+//   })
+
+// }
+
+
+async function getSongs(folder) {
     currentFolder = folder;
 
-    // let raw = await fetch(`http://127.0.0.1:3000/${folder}/`); --- It can we be ...
+    try {
+        let raw = await fetch(`https://asad-ali-developer.github.io/Spotify-Clone-by-Asad/${folder}/`);
+        let response = await raw.text();
 
-    let raw = await fetch(`https://asad-ali-developer.github.io/Spotify-Clone-by-Asad/${folder}/`);
-    let response = await raw.text();
-    // console.log(response);
+        let element = document.createElement("div");
+        element.innerHTML = response;
 
-    let element = document.createElement("div");
-    element.innerHTML = response
+        let as = element.getElementsByTagName("a");
 
-    let as = element.getElementsByTagName("a")
-    // console.log(as);
+        songs = [];
 
-
-    songs = [];
-
-    // We have to run loop to extract all "a's" from response
-
-    for (let index = 0; index < as.length; index++) {
-        const element = as[index];
-        if(element.href.endsWith(".mp3")){
-            songs.push(element.href.split(`/${folder}/`)[1])
+        for (let index = 0; index < as.length; index++) {
+            const element = as[index];
+            if (element.href.endsWith(".mp3")) {
+                songs.push(element.href.split(`/${folder}/`)[1]);
+            }
         }
+
+        let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
+
+        let clutter = "";
+
+        songs.forEach((elem) => {
+            clutter += `<li>
+                <img class="invert" src="images/music.svg" alt="">
+                
+                <div class="info">
+                    <div class="songName">${elem.replaceAll("%20", " ")}</div>
+                    <div class="singerName">Asad</div>
+                </div>
+
+                <div class="playNow">
+                    <span>Play Now</span>
+                    <img class="border invert" src="images/playbtn.svg" alt="">
+                </div>
+            </li>`;
+        });
+
+        songUL.innerHTML = clutter;
+
+        Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach((elem) => {
+            elem.addEventListener("click", () => {
+                playMusic(elem.querySelector(".info").firstElementChild.innerHTML.trim());
+            });
+        });
+
+    } catch (error) {
+        console.error('Error fetching songs:', error);
     }
-    
-    // console.log(songs);
-
-    let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0]
-    
-    var clutter = "";
-    
-    songs.forEach((elem) => {
-        clutter += `<li>
-        <img class="invert" src="images/music.svg" alt="">
-        
-        <div class="info">
-            <div class="songName"> ${elem.replaceAll("%20", " ")}
-            </div>
-            <div class="singerName">Asad</div>
-        </div>
-
-        <div class="playNow">
-            <span>Play Now</span>
-            <img class="border invert" src="images/playbtn.svg" alt="">
-        </div>
-    </li>`
-    })
-   
-    songUL.innerHTML = clutter;
-
-
-    // var leftSong;
-
-//    let songIterate = document.querySelector(".songList").getElementsByTagName("li")
-
-  Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach((elem) => {
-    elem.addEventListener("click", () => {
-        // console.log(elem.querySelector(".info").firstElementChild.innerHTML); 
-        playMusic(elem.querySelector(".info").firstElementChild.innerHTML.trim()); 
-        // Here, trim() is wrote to remove the extra spaces in url or Address ...
-    })
-  })
-
 }
-
 
 
 const playMusic = (track, pause = false) => {
