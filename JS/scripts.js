@@ -70,6 +70,7 @@ const playMusic = (track, pause = false) => {
     document.querySelector(".songTime").innerHTML = "00:00 / 00:00";
 };
 
+
 async function displayAlbums() {
     const repoOwner = 'asad-ali-developer';
     const repoName = 'Spotify-Clone-by-Asad';

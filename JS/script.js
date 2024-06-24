@@ -174,65 +174,109 @@ function formatTime(seconds) {
 
 
 
-async function displayAlbums(){
-    let raw = await fetch(`http://127.0.0.1:5500/songs/`)
-    let response = await raw.text();
-    // console.log(response);
+// async function displayAlbums(){
+//     let raw = await fetch(`http://127.0.0.1:5500/songs/`)
+//     let response = await raw.text();
+//     // console.log(response);
 
-    let div = document.createElement("div")
-    div.innerHTML = response
-    console.log(div);
+//     let div = document.createElement("div")
+//     div.innerHTML = response
+//     console.log(div);
 
-    let anchors = div.getElementsByTagName("a")
-    // console.log(anchors);
+//     let anchors = div.getElementsByTagName("a")
+//     // console.log(anchors);
     
-    let cardsContainer = document.querySelector(".cardsContainer");
+//     let cardsContainer = document.querySelector(".cardsContainer");
 
-    let array = Array.from(anchors)
+//     let array = Array.from(anchors)
 
-    for (let index = 0; index < array.length; index++) {
-        const elem = array[index];
+//     for (let index = 0; index < array.length; index++) {
+//         const elem = array[index];
     
     
          
-        if(elem.href.includes("/songs/")){
+//         if(elem.href.includes("/songs/")){
 
-            // console.log(elem.href.split("/").splice(-1)[0]);
+//             // console.log(elem.href.split("/").splice(-1)[0]);
 
-            let folder = elem.href.split("/").splice(-1)[0];
+//             let folder = elem.href.split("/").splice(-1)[0];
 
-            // This is used to fetch the data from folder which is 'info.json'
-            let raw = await fetch(`http://127.0.0.1:5500/songs/${folder}/info.json`)
-            let response = await raw.json();
+//             // This is used to fetch the data from folder which is 'info.json'
+//             let raw = await fetch(`http://127.0.0.1:5500/songs/${folder}/info.json`)
+//             let response = await raw.json();
 
-            cardsContainer.innerHTML += `<div data-folder="${folder}" class="card">
-                    <div class="img">
-                    <img src="/songs/${folder}/cover.jpeg" alt="">
-                    </div>
-                <h1>${response.title}</h1>
-                <p>${response.description}</p>
+//             cardsContainer.innerHTML += `<div data-folder="${folder}" class="card">
+//                     <div class="img">
+//                     <img src="/songs/${folder}/cover.jpeg" alt="">
+//                     </div>
+//                 <h1>${response.title}</h1>
+//                 <p>${response.description}</p>
                 
-                <div class="play-btn">
-                <i class="bx bx-play"> </i>
-            </div>
-                </div>`
+//                 <div class="play-btn">
+//                 <i class="bx bx-play"> </i>
+//             </div>
+//                 </div>`
             
             
-            // document.querySelector(".cardsContainer").innerHTML = clutter;
-        }
-    }
+//             // document.querySelector(".cardsContainer").innerHTML = clutter;
+//         }
+//     }
 
-     // Load the playlist whenever card is clicked!
+//      // Load the playlist whenever card is clicked!
 
-     Array.from(document.getElementsByClassName("card")).forEach((elem) => {
-        elem.addEventListener("click", async (item) => {
+//      Array.from(document.getElementsByClassName("card")).forEach((elem) => {
+//         elem.addEventListener("click", async (item) => {
   
-           songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
-        })
-    })
+//            songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
+//         })
+//     })
 
 
+// }
+
+
+async function displayAlbums() {
+    const repoOwner = 'asad-ali-developer';
+    const repoName = 'Spotify-Clone-by-Asad';
+    const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/songs`;
+
+    try {
+        let response = await fetch(apiUrl);
+        let data = await response.json();
+
+        let cardsContainer = document.querySelector(".cardsContainer");
+
+        data.forEach(async (item) => {
+            if (item.type === 'dir') {
+                let infoUrl = item.url.replace('https://api.github.com/repos/', 'https://raw.githubusercontent.com/');
+                let infoResponse = await fetch(`${infoUrl}/info.json`);
+                let info = await infoResponse.json();
+
+                cardsContainer.innerHTML += `<div data-folder="${item.name}" class="card">
+                    <div class="img">
+                        <img src="https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/songs/${item.name}/cover.jpeg" alt="">
+                    </div>
+                    <h1>${info.title}</h1>
+                    <p>${info.description}</p>
+                    
+                    <div class="play-btn">
+                        <i class="bx bx-play"> </i>
+                    </div>
+                </div>`;
+            }
+        });
+
+        Array.from(document.getElementsByClassName("card")).forEach((elem) => {
+            elem.addEventListener("click", async () => {
+                await getSongs(`songs/${elem.dataset.folder}`);
+            });
+        });
+
+    } catch (error) {
+        console.error('Error fetching albums:', error);
+    }
 }
+
 
 
 async function main(){
